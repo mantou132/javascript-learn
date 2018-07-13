@@ -1,0 +1,28 @@
+{
+  "name": "javascript-learn",
+  "version": "0.0.0",
+  "main": "a.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mt",
+  "license": "ISC",
+  "devDependencies": {
+    "react": "^16.3.2"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "^0.11.1",
+    "@tensorflow/tfjs-core": "^0.11.0",
+    "@tensorflow/tfjs-node": "^0.1.2",
+    "preload-webpack-plugin": "git+https://github.com/mantou132/preload-webpack-plugin.git"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mantou132/javascript-learn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mantou132/javascript-learn/issues"
+  },
+  "homepage": "https://github.com/mantou132/javascript-learn#readme",
+  "description": ""
+}

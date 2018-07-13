@@ -1,0 +1,198 @@
+Statistical profiling result from isolate-0x104001e00-v8.log, (263 ticks, 13 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+      1    0.4%          /usr/lib/system/libsystem_pthread.dylib
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+    126   47.9%   48.1%  LazyCompile: *quick /Users/mantou/test/quicksort2.js:39:15
+     17    6.5%    6.5%  LazyCompile: *partition /Users/mantou/test/quicksort2.js:9:19
+      8    3.0%    3.1%  LazyCompile: *generateArr /Users/mantou/test/quicksort2.js:64:21
+      1    0.4%    0.4%  Script: ~<anonymous> internal/loader/ModuleRequest.js:1:11
+      1    0.4%    0.4%  LazyCompile: ~swap /Users/mantou/test/quicksort2.js:2:14
+      1    0.4%    0.4%  Builtin: InterpreterEntryTrampoline
+
+ [C++]:
+   ticks  total  nonlib   name
+     19    7.2%    7.3%  t node::(anonymous namespace)::ContextifyScript::New(v8::FunctionCallbackInfo<v8::Value> const&)
+     13    4.9%    5.0%  T v8::internal::Heap::AllocateFixedArrayWithFiller(int, v8::internal::PretenureFlag, v8::internal::Object*)
+      5    1.9%    1.9%  T v8::internal::IncrementalMarking::Step(unsigned long, v8::internal::IncrementalMarking::CompletionAction, v8::internal::IncrementalMarking::ForceCompletionAction, v8::internal::StepOrigin)
+      5    1.9%    1.9%  T node::TTYWrap::New(v8::FunctionCallbackInfo<v8::Value> const&)
+      5    1.9%    1.9%  T ___getrlimit
+      4    1.5%    1.5%  t node::Binding(v8::FunctionCallbackInfo<v8::Value> const&)
+      2    0.8%    0.8%  t v8::internal::(anonymous namespace)::CopyObjectToObjectElements(v8::internal::FixedArrayBase*, v8::internal::ElementsKind, unsigned int, v8::internal::FixedArrayBase*, v8::internal::ElementsKind, unsigned int, int)
+      2    0.8%    0.8%  t node::cares_wrap::(anonymous namespace)::ChannelWrap::New(v8::FunctionCallbackInfo<v8::Value> const&)
+      2    0.8%    0.8%  T v8::internal::SerializerDeserializer::Iterate(v8::internal::Isolate*, v8::internal::RootVisitor*)
+      2    0.8%    0.8%  T v8::internal::Runtime_GenerateRandomNumbers(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.8%    0.8%  T node::NodePlatform::MonotonicallyIncreasingTime()
+      2    0.8%    0.8%  T _os_unfair_lock_assert_owner
+      1    0.4%    0.4%  t void v8::internal::Worklist<v8::internal::HeapObject*, 64>::Segment::Update<v8::internal::IncrementalMarking::UpdateMarkingWorklistAfterScavenge()::$_0>(v8::internal::IncrementalMarking::UpdateMarkingWorklistAfterScavenge()::$_0)
+      1    0.4%    0.4%  t v8::internal::compiler::CFGBuilder::BuildBlocks(v8::internal::compiler::Node*)
+      1    0.4%    0.4%  t v8::internal::Worklist<std::__1::pair<v8::internal::HeapObject*, int>, 256>::Push(int, std::__1::pair<v8::internal::HeapObject*, int>)
+      1    0.4%    0.4%  t v8::internal::OptimizedFrame::type() const
+      1    0.4%    0.4%  t v8::internal::MarkCompactCollector::RootMarkingVisitor::VisitRootPointer(v8::internal::Root, v8::internal::Object**)
+      1    0.4%    0.4%  t v8::internal::LookupIterator::State v8::internal::LookupIterator::LookupInRegularHolder<false>(v8::internal::Map*, v8::internal::JSReceiver*)
+      1    0.4%    0.4%  t v8::internal::FuncNameInferrer::State::~State()
+      1    0.4%    0.4%  t v8::internal::DescriptorArray::Set(int, v8::internal::Name*, v8::internal::Object*, v8::internal::PropertyDetails)
+      1    0.4%    0.4%  t v8::internal::AllocationObserver::AllocationStep(int, unsigned char*, unsigned long)
+      1    0.4%    0.4%  t std::__1::vector<v8::internal::SourcePosition, v8::internal::ZoneAllocator<v8::internal::SourcePosition> >::resize(unsigned long, v8::internal::SourcePosition const&)
+      1    0.4%    0.4%  t std::__1::deque<v8::internal::compiler::Node*, v8::internal::RecyclingZoneAllocator<v8::internal::compiler::Node*> >::pop_front()
+      1    0.4%    0.4%  t node::Read(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.4%    0.4%  t _update_cache_for_file_streams
+      1    0.4%    0.4%  t _szone_pressure_relief
+      1    0.4%    0.4%  t _szone_malloc_should_clear
+      1    0.4%    0.4%  t _mach_msg_destroy_port
+      1    0.4%    0.4%  t __os_unfair_lock_lock_slow
+      1    0.4%    0.4%  t ___vfprintf
+      1    0.4%    0.4%  T v8::internal::interpreter::BytecodeRegisterOptimizer::PrepareOutputRegister(v8::internal::interpreter::Register)
+      1    0.4%    0.4%  T v8::internal::VSNPrintF(v8::internal::Vector<char>, char const*, __va_list_tag*)
+      1    0.4%    0.4%  T v8::internal::String::CalculateLineEnds(v8::internal::Handle<v8::internal::String>, bool)
+      1    0.4%    0.4%  T v8::internal::Space::ResumeAllocationObservers()
+      1    0.4%    0.4%  T v8::internal::Script::FindSharedFunctionInfo(v8::internal::Isolate*, v8::internal::FunctionLiteral const*)
+      1    0.4%    0.4%  T v8::internal::SafepointEntry::HasRegisters() const
+      1    0.4%    0.4%  T v8::internal::RootScavengeVisitor::ScavengePointer(v8::internal::Object**)
+      1    0.4%    0.4%  T v8::internal::Parser::ParseFunctionLiteral(v8::internal::AstRawString const*, v8::internal::Scanner::Location, v8::internal::FunctionNameValidity, v8::internal::FunctionKind, int, v8::internal::FunctionLiteral::FunctionType, v8::internal::LanguageMode, bool*)
+      1    0.4%    0.4%  T v8::internal::IncrementalMarking::WhiteToGreyAndPush(v8::internal::HeapObject*)
+      1    0.4%    0.4%  T v8::internal::Heap::ReserveSpace(std::__1::vector<v8::internal::Heap::Chunk, std::__1::allocator<v8::internal::Heap::Chunk> >*, std::__1::vector<unsigned char*, std::__1::allocator<unsigned char*> >*)
+      1    0.4%    0.4%  T v8::internal::GCTracer::Scope::~Scope()
+      1    0.4%    0.4%  T v8::internal::GCTracer::AverageSpeed(v8::base::RingBuffer<std::__1::pair<unsigned long long, double> > const&, std::__1::pair<unsigned long long, double> const&, double)
+      1    0.4%    0.4%  T v8::internal::AstValueFactory::Internalize(v8::internal::Isolate*)
+      1    0.4%    0.4%  T _os_unfair_lock_unlock_no_tsd_4libpthread
+
+ [Summary]:
+   ticks  total  nonlib   name
+    154   58.6%   58.8%  JavaScript
+     95   36.1%   36.3%  C++
+     28   10.6%   10.7%  GC
+      1    0.4%          Shared libraries
+     13    4.9%          Unaccounted
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+     31   50.0%   11.8%  T v8::internal::Builtin_HandleApiCall(int, v8::internal::Object**, v8::internal::Isolate*)
+     15   24.2%    5.7%  T v8::internal::Runtime_GrowArrayElements(int, v8::internal::Object**, v8::internal::Isolate*)
+      7   11.3%    2.7%  T v8::internal::Runtime_CompileLazy(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    3.2%    0.8%  T v8::internal::Runtime_GenerateRandomNumbers(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    3.2%    0.8%  T v8::internal::Runtime_CompileOptimized_NotConcurrent(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    3.2%    0.8%  T v8::internal::Runtime_CompileForOnStackReplacement(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    1.6%    0.4%  T v8::internal::Runtime_StoreIC_Miss(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    1.6%    0.4%  T v8::internal::Runtime_DefineClass(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    1.6%    0.4%  T v8::internal::Runtime_AllocateInNewSpace(int, v8::internal::Object**, v8::internal::Isolate*)
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 1.0% are not shown.
+
+   ticks parent  name
+    126   47.9%  LazyCompile: *quick /Users/mantou/test/quicksort2.js:39:15
+    124   98.4%    LazyCompile: *quick /Users/mantou/test/quicksort2.js:39:15
+    118   95.2%      LazyCompile: *quick /Users/mantou/test/quicksort2.js:39:15
+    116   98.3%        LazyCompile: *quick /Users/mantou/test/quicksort2.js:39:15
+    111   95.7%          LazyCompile: *quick /Users/mantou/test/quicksort2.js:39:15
+    107   96.4%            LazyCompile: *quick /Users/mantou/test/quicksort2.js:39:15
+      4    3.6%            LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      5    4.3%          LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      4   80.0%            LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      1   20.0%            LazyCompile: ~quickSort /Users/mantou/test/quicksort2.js:52:19
+      2    1.7%        LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      1   50.0%          LazyCompile: ~quickSort /Users/mantou/test/quicksort2.js:52:19
+      1  100.0%            Script: ~<anonymous> /Users/mantou/test/quicksort2.js:1:11
+      1   50.0%          LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      1  100.0%            LazyCompile: ~quickSort /Users/mantou/test/quicksort2.js:52:19
+      6    4.8%      LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      4   66.7%        LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      3   75.0%          LazyCompile: ~quickSort /Users/mantou/test/quicksort2.js:52:19
+      3  100.0%            Script: ~<anonymous> /Users/mantou/test/quicksort2.js:1:11
+      1   25.0%          LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      1  100.0%            LazyCompile: ~quickSort /Users/mantou/test/quicksort2.js:52:19
+      2   33.3%        LazyCompile: ~quickSort /Users/mantou/test/quicksort2.js:52:19
+      2  100.0%          Script: ~<anonymous> /Users/mantou/test/quicksort2.js:1:11
+      2  100.0%            LazyCompile: ~Module._compile module.js:598:37
+      2    1.6%    LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      2  100.0%      LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      1   50.0%        LazyCompile: ~quickSort /Users/mantou/test/quicksort2.js:52:19
+      1  100.0%          Script: ~<anonymous> /Users/mantou/test/quicksort2.js:1:11
+      1  100.0%            LazyCompile: ~Module._compile module.js:598:37
+      1   50.0%        LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      1  100.0%          LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      1  100.0%            LazyCompile: ~quickSort /Users/mantou/test/quicksort2.js:52:19
+
+     19    7.2%  t node::(anonymous namespace)::ContextifyScript::New(v8::FunctionCallbackInfo<v8::Value> const&)
+     19  100.0%    T v8::internal::Builtin_HandleApiCall(int, v8::internal::Object**, v8::internal::Isolate*)
+     19  100.0%      LazyCompile: ~runInThisContext bootstrap_node.js:503:28
+     19  100.0%        LazyCompile: ~NativeModule.compile bootstrap_node.js:589:44
+     19  100.0%          LazyCompile: ~NativeModule.require bootstrap_node.js:521:34
+      3   15.8%            Script: ~<anonymous> util.js:1:11
+      3   15.8%            Script: ~<anonymous> tty.js:1:11
+      3   15.8%            Script: ~<anonymous> module.js:1:11
+      2   10.5%            Script: ~<anonymous> stream.js:1:11
+      1    5.3%            Script: ~<anonymous> readline.js:1:11
+      1    5.3%            Script: ~<anonymous> internal/url.js:1:11
+      1    5.3%            Script: ~<anonymous> internal/loader/ModuleRequest.js:1:11
+      1    5.3%            Script: ~<anonymous> fs.js:1:11
+      1    5.3%            LazyCompile: ~setupNextTick internal/process/next_tick.js:49:23
+      1    5.3%            LazyCompile: ~setupGlobalVariables bootstrap_node.js:255:32
+      1    5.3%            LazyCompile: ~setupGlobalTimeouts bootstrap_node.js:304:31
+      1    5.3%            LazyCompile: ~setupGlobalConsole bootstrap_node.js:314:30
+
+     17    6.5%  LazyCompile: *partition /Users/mantou/test/quicksort2.js:9:19
+     17  100.0%    LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+     10   58.8%      LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      6   60.0%        LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      5   83.3%          LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      5  100.0%            LazyCompile: ~quick /Users/mantou/test/quicksort2.js:39:15
+      1   16.7%          LazyCompile: ~quickSort /Users/mantou/test/quicksort2.js:52:19
+      1  100.0%            Script: ~<anonymous> /Users/mantou/test/quicksort2.js:1:11
+      4   40.0%        LazyCompile: ~quickSort /Users/mantou/test/quicksort2.js:52:19
+      4  100.0%          Script: ~<anonymous> /Users/mantou/test/quicksort2.js:1:11
+      4  100.0%            LazyCompile: ~Module._compile module.js:598:37
+      7   41.2%      LazyCompile: ~quickSort /Users/mantou/test/quicksort2.js:52:19
+      7  100.0%        Script: ~<anonymous> /Users/mantou/test/quicksort2.js:1:11
+      7  100.0%          LazyCompile: ~Module._compile module.js:598:37
+      7  100.0%            LazyCompile: ~Module._extensions..js module.js:650:37
+
+     13    4.9%  UNKNOWN
+
+     13    4.9%  T v8::internal::Heap::AllocateFixedArrayWithFiller(int, v8::internal::PretenureFlag, v8::internal::Object*)
+     13  100.0%    T v8::internal::Runtime_GrowArrayElements(int, v8::internal::Object**, v8::internal::Isolate*)
+     13  100.0%      LazyCompile: *generateArr /Users/mantou/test/quicksort2.js:64:21
+     13  100.0%        Script: ~<anonymous> /Users/mantou/test/quicksort2.js:1:11
+     13  100.0%          LazyCompile: ~Module._compile module.js:598:37
+     13  100.0%            LazyCompile: ~Module._extensions..js module.js:650:37
+
+      8    3.0%  LazyCompile: *generateArr /Users/mantou/test/quicksort2.js:64:21
+      8  100.0%    Script: ~<anonymous> /Users/mantou/test/quicksort2.js:1:11
+      8  100.0%      LazyCompile: ~Module._compile module.js:598:37
+      8  100.0%        LazyCompile: ~Module._extensions..js module.js:650:37
+      8  100.0%          LazyCompile: ~Module.load module.js:551:33
+      8  100.0%            LazyCompile: ~tryModuleLoad module.js:500:23
+
+      5    1.9%  T v8::internal::IncrementalMarking::Step(unsigned long, v8::internal::IncrementalMarking::CompletionAction, v8::internal::IncrementalMarking::ForceCompletionAction, v8::internal::StepOrigin)
+
+      5    1.9%  T node::TTYWrap::New(v8::FunctionCallbackInfo<v8::Value> const&)
+      5  100.0%    T v8::internal::Builtin_HandleApiCall(int, v8::internal::Object**, v8::internal::Isolate*)
+      5  100.0%      LazyCompile: ~WriteStream tty.js:66:21
+      5  100.0%        LazyCompile: ~createWritableStdioStream internal/process/stdio.js:142:35
+      3   60.0%          LazyCompile: ~getStdout internal/process/stdio.js:12:21
+      3  100.0%            Script: ~<anonymous> console.js:1:11
+      2   40.0%          LazyCompile: ~getStderr internal/process/stdio.js:27:21
+      2  100.0%            Script: ~<anonymous> console.js:1:11
+
+      5    1.9%  T ___getrlimit
+
+      4    1.5%  t node::Binding(v8::FunctionCallbackInfo<v8::Value> const&)
+      4  100.0%    T v8::internal::Builtin_HandleApiCall(int, v8::internal::Object**, v8::internal::Isolate*)
+      1   25.0%      Script: ~<anonymous> net.js:1:11
+      1  100.0%        LazyCompile: ~NativeModule.compile bootstrap_node.js:589:44
+      1  100.0%          LazyCompile: ~NativeModule.require bootstrap_node.js:521:34
+      1  100.0%            Script: ~<anonymous> tty.js:1:11
+      1   25.0%      Script: ~<anonymous> fs.js:1:11
+      1  100.0%        LazyCompile: ~NativeModule.compile bootstrap_node.js:589:44
+      1  100.0%          LazyCompile: ~NativeModule.require bootstrap_node.js:521:34
+      1  100.0%            Script: ~<anonymous> module.js:1:11
+      1   25.0%      Script: ~<anonymous> bootstrap_node.js:10:10
+      1   25.0%      LazyCompile: ~startup bootstrap_node.js:13:19
+      1  100.0%        Script: ~<anonymous> bootstrap_node.js:10:10
+

@@ -1,0 +1,13 @@
+<p>选择 1000+ 文件</p>
+<input type="file" multiple>
+
+<script>
+  const input = document.querySelector('input');
+  input.onchange = () => {
+    console.time('read size');
+    const size = [...input.files].reduce((p, file) => {
+      return p + file.lastModified;
+    }, 0);
+    console.timeEnd('read size');
+  };
+</script>
