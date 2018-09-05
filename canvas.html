@@ -1,0 +1,23 @@
+<body>
+  <canvas id="one"></canvas>
+  <canvas id="two"></canvas>
+  <script>
+    var one = document.getElementById("one").getContext("bitmaprenderer"); 
+    var two = document.getElementById("two").getContext("bitmaprenderer");
+
+    var offscreen = new OffscreenCanvas(256, 256);
+    var gl = offscreen.getContext('webgl');
+
+    // ... some drawing for the first canvas using the gl context ...
+
+    // Commit rendering to the first canvas
+    var bitmapOne = offscreen.transferToImageBitmap();
+    one.transferImageBitmap(bitmapOne);
+
+    // ... some more drawing for the second canvas using the gl context ...
+
+    // Commit rendering to the second canvas 
+    var bitmapTwo = offscreen.transferToImageBitmap();
+    two.transferImageBitmap(bitmapTwo);
+  </script>
+</body>
