@@ -8,7 +8,8 @@
   "author": "mt",
   "license": "ISC",
   "devDependencies": {
-    "react": "^16.3.2"
+    "react": "^16.3.2",
+    "web-ext-native-msg": "^3.1.1"
   },
   "dependencies": {
     "@tensorflow/tfjs": "^0.11.1",
