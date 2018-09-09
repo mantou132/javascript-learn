@@ -16,7 +16,8 @@
     "@tensorflow/tfjs-core": "^0.11.0",
     "@tensorflow/tfjs-node": "^0.1.2",
     "mdns": "^2.4.0",
-    "preload-webpack-plugin": "git+https://github.com/mantou132/preload-webpack-plugin.git"
+    "preload-webpack-plugin": "git+https://github.com/mantou132/preload-webpack-plugin.git",
+    "ps-tree": "^1.1.0"
   },
   "repository": {
     "type": "git",
