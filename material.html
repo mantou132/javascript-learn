@@ -10,3 +10,11 @@
 <script>
   new mdc.textField.MDCTextField(document.querySelector('.mdc-text-field'));
 </script>
+
+<div class="mdc-ripple-surface mdc-card" style="width: 150px; height: 150px">
+  Title
+</div>
+<script type="module">
+  import { MDCRipple } from 'https://dev.jspm.io/@material/ripple';
+  new MDCRipple(document.querySelector('.mdc-ripple-surface'));
+</script>
