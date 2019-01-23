@@ -1,0 +1,10 @@
+<button>abc</button>
+<script>
+  document.querySelector('button').onclick = () => {
+    const mt = () => queueMicrotask(() => {
+      document.body.innerHTML = Date.now();
+      mt();
+    })
+    mt();
+  }
+</script>
