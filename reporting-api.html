@@ -1,0 +1,12 @@
+<script>
+const observer = new ReportingObserver((reports, observer) => {
+  for (const report of reports) {
+    console.log(report)
+  }
+}, {buffered: true});
+
+observer.observe();
+
+</script>
+
+<script src="https://developers.google.com/web/updates/2018/09/reportingapi"></script>
