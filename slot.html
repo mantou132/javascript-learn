@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>::slotted example</title>
+    <script>
+      customElements.define('ui-scrollbar',
+        class extends HTMLElement {
+          constructor() {
+            super();
+
+            const template = document.getElementById('ui-scrollbar');
+            const templateContent = template.content;
+
+            const shadowRoot = this.attachShadow({mode: 'open'});
+
+            const style = document.createElement('style');
+            style.textContent = `
+              ::slotted(*) { color: gray; }
+              ::slotted(*)::-webkit-scrollbar {
+                display: none;
+              }
+            `;
+
+            shadowRoot.appendChild(style);
+            shadowRoot.appendChild(templateContent.cloneNode(true));
+        }
+      });
+
+    </script>
+  </head>
+  <body>
+    <h1>::slotted pseudo-element example</h1>
+
+    <template id="ui-scrollbar">
+      <slot>CONTENT MISSING</slot>
+    </template>
+
+    <ui-scrollbar>
+      <div style="height: 300px;width: 40px;overflow: auto;">
+        <div style="height: 400px;">
+          
+          dsf
+          sdg
+          sdf
+          sdf
+          sdf
+          df
+          sdf
+          sdf
+          sdg
+          sdf
+          sdf
+          </div>
+      </div>
+    </ui-scrollbar>
+
+  </body>
+</html>
