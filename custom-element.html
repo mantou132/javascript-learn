@@ -1,0 +1,18 @@
+<body>
+<script>
+    window.shadowRoot = new WeakMap
+    class Test extends HTMLElement {
+      constructor() {
+        super()
+        this.attachShadow({ mode: 'open' });
+        window.shadowRoot.set(this.shadowRoot, 1);
+      }
+      connectedCallback() {
+        console.log(window.shadowRoot.get(this.shadowRoot));
+      }
+    }
+    customElements.define('app-test', Test)
+  
+    document.body.append(document.createElement('app-test'))
+  </script>
+</body>
