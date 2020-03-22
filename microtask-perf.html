@@ -1,0 +1,35 @@
+<body></body>
+<script>
+  document.body.innerHTML = '';
+  const eles = new Array(10000).fill().map(() => document.createElement("div"));
+  document.body.append(...eles);
+  const funs = eles.map(ele => () => {
+    ele.title = `array: ${Date.now()}`;
+    ele.innerText = `array: ${Date.now()}`;
+  });
+  console.time("array-queue");
+  funs.forEach(fun => fun());
+  console.timeEnd("array-queue");
+
+  document.body.innerHTML = '';
+  const eles1 = new Array(10000).fill().map(() => document.createElement("div"));
+  document.body.append(...eles1);
+  const funs1 = eles1.map(ele => () => {
+    ele.title = `micro: ${Date.now()}`;
+    ele.innerText = `micro: ${Date.now()}`;
+  });
+  console.time("micro-queue");
+  let index = 0;
+  const executor = () => {
+    queueMicrotask(() => {
+      if (funs1[index]) {
+        funs1[index]();
+        index++;
+        executor();
+      } else {
+        console.timeEnd("micro-queue");
+      }
+    });
+  };
+  executor();
+</script>
