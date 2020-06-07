@@ -1,0 +1,37 @@
+<audio id="audio" hidden preload="metadata" src="./take-me-hand.mp3"></audio>
+<canvas id="canvas" hidden width="300" height="300"></canvas>
+<video id="video" controls width="300" height="150"></video>
+
+<script>
+setTimeout(() => {
+  const ctx = canvas.getContext('2d');
+  ctx.rect(10, 10, 150, 100);
+  ctx.fill();
+  // audio.muted = true;
+  const ams = (audio.captureStream ? audio.captureStream() : audio.mozCaptureStream()).getAudioTracks()[0];
+  const ims = canvas.captureStream(25).getVideoTracks()[0];
+  video.srcObject = new MediaStream([ims, ams]);
+}, 1000)
+
+navigator.mediaSession.metadata = new window.MediaMetadata({artist: 'artist', album: 'album'});
+
+navigator.mediaSession.setActionHandler('play', () => {
+  video.play();
+  audio.play();
+});
+
+navigator.mediaSession.setActionHandler('pause', () => {
+  video.pause();
+  audio.pause();
+});
+
+
+video.onplay = async () => {
+  audio.play();
+  navigator.mediaSession.playbackState = "playing";
+}
+video.onpause = async () =>{
+  audio.pause();
+  navigator.mediaSession.playbackState = "paused";
+}
+</script>

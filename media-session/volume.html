@@ -1,0 +1,21 @@
+<video id="video" controls src="./frag_bunny.mp4" width="300" height="150"></video>
+
+<script>
+video.volume = 0;
+
+navigator.mediaSession.metadata = new window.MediaMetadata({artist: 'artist', album: 'album'});
+
+navigator.mediaSession.setActionHandler('play', () => {
+  video.play();
+});
+navigator.mediaSession.setActionHandler('pause', () => {
+  video.pause();
+});
+
+video.onplay = async () => {
+  navigator.mediaSession.playbackState = "playing";
+}
+video.onpause = async () =>{
+  navigator.mediaSession.playbackState = "paused";
+}
+</script>
