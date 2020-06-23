@@ -1,0 +1,15 @@
+<canvas id="canvas"></canvas>
+<video id="video" muted playsinline></video>
+
+<script>
+  const ctx = canvas.getContext("2d");
+  ctx.rect(10, 10, 640, 640);
+  ctx.fill();
+  const stream = canvas.captureStream();
+  video.srcObject = stream;
+  video
+    .play()
+    .then(() => console.log("video playing"))
+    .catch(console.log);
+  video.onplaying = () => console.log("video onplaying");
+</script>
