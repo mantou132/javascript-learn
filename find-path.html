@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+    <script>
+      function genMap(len) {
+        const result = [];
+        for (let i = 0; i < len; i++) {
+          for (let j = 0; j < len; j++) {
+            if (!result[i]) {
+              result[i] = [];
+            }
+            result[i][j] = 0;
+          }
+        }
+        const addObstacle = () => {
+          const getRandomPosition = () => Math.floor(len * Math.random());
+          const getRandomLength = () =>
+            Math.floor(len * (0.1 + Math.random() / 8));
+          const getRandomDir = () => [
+            Math.random() > 0.5 ? 0 : 1,
+            Math.random() > 0.5 ? 0 : 1,
+          ];
+          const paint = ({ x, y }) => {
+            const dir = getRandomDir();
+            const dirX = dir[1] ? 0 : dir[0] ? -1 : 1;
+            const dirY = dirX ? 0 : dir[1] ? -1 : 1;
+            const step = getRandomLength();
+            let lastX = x;
+            let lastY = y;
+            for (let i = 0; i < step; i++) {
+              const nextX = lastX + dirX;
+              const nextY = lastY + dirY;
+              if (nextX < 0 || nextY < 0 || nextX >= len || nextY >= len) break;
+              lastX = nextX;
+              lastY = nextY;
+              result[nextX][nextY] = 1;
+            }
+            return { x: lastX, y: lastY };
+          };
+          paint(paint({ x: getRandomPosition(), y: getRandomPosition() }));
+        };
+        const obstacleCount = Math.floor(10 * (2 + Math.random()));
+        for (let c = 0; c < obstacleCount; c++) {
+          addObstacle();
+        }
+        return result;
+      }
+
+      function getList(point) {
+        const result = [];
+        const appendParent = (p) => {
+          result.unshift(p);
+          if (p.parent) appendParent(p.parent);
+        };
+        appendParent(point);
+        return result;
+      }
+
+      function findPath(map, baseCost, heuristicCost) {
+        const n = map.length;
+        const start = { x: 0, y: 0 };
+        const end = { x: n - 1, y: n - 1 };
+        const openSet = new Map();
+        const closeSet = new Map();
+        openSet.set(`${start.x},${start.y}`, start);
+
+        const result = { map, loopCount: 0, list: [], closeSet };
+
+        while (openSet.size) {
+          // 优先级一样的话先进先出
+          const [, point] = [...openSet]
+            .sort((a, b) => a[1].cost - b[1].cost)
+            .shift();
+          openSet.delete(`${point.x},${point.y}`);
+          if (point.x === end.x && point.y === end.y) {
+            result.list = getList(point);
+            return result;
+          } else {
+            closeSet.set(`${point.x},${point.y}`, point);
+            for (let i = -1; i < 2; i++) {
+              for (let j = -1; j < 2; j++) {
+                if (!i && !j) continue;
+                result.loopCount++;
+                const x = point.x + i;
+                const y = point.y + j;
+                const key = `${x},${y}`;
+                if (x < 0 || x >= n || y < 0 || y >= n) {
+                  continue;
+                }
+                if (map[x][y]) {
+                  continue;
+                }
+                if (closeSet.has(key)) {
+                  continue;
+                }
+                if (!openSet.has(key)) {
+                  const p = { x, y };
+                  p.parent = point;
+                  p.cost = baseCost(p, start) + heuristicCost(p, end);
+                  openSet.set(key, p);
+                }
+              }
+            }
+          }
+        }
+        return result;
+      }
+
+      function print(callback) {
+        const startTime = performance.now();
+        const { map, list, closeSet } = callback();
+        const resultStr =
+          `Total time: ${Math.round(performance.now() - startTime)}ms;\n` +
+          `Total step: ${list.length}`;
+        const scale = 3;
+        const canvas = document.createElement("canvas");
+        canvas.width = map.length * scale;
+        canvas.height = map.length * scale;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "gray";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "black";
+        map.forEach((line, x) =>
+          line.forEach((e, y) => {
+            if (e) {
+              ctx.fillRect(x * scale, y * scale, scale, scale);
+            }
+          })
+        );
+        ctx.fillStyle = "green";
+        closeSet.forEach(({ x, y }) => {
+          ctx.fillRect(x * scale, y * scale, scale, scale);
+        });
+        ctx.fillStyle = "blue";
+        list.forEach(({ x, y }) => {
+          ctx.fillRect(x * scale, y * scale, scale, scale);
+        });
+        ctx.fillStyle = "white";
+        ctx.font = "16px sans-serif";
+        const { width } = ctx.measureText(resultStr);
+        ctx.fillText(resultStr, canvas.width - width, 16, width);
+        document.body.append(canvas);
+      }
+
+      function test(baseCost, heuristicCost, map) {
+        print(() => findPath(map, baseCost, heuristicCost));
+      }
+
+      function heuristicCost(point, goal) {
+        const D = 1;
+        const D2 = 1;
+        const dx = Math.abs(point.x - goal.x);
+        const dy = Math.abs(point.y - goal.y);
+        return D * (dx + dy) + (D2 - 2 * D) * Math.min(dx, dy);
+      }
+
+      function zeroCost() {
+        return 0;
+      }
+
+      const map1 = genMap(130);
+      // 最佳优先搜索
+      test(zeroCost, heuristicCost, map1);
+      // a*
+      test(heuristicCost, heuristicCost, map1);
+      // 全扫描，类似洪水
+      test(zeroCost, zeroCost, map1);
+
+      const map2 = genMap(130);
+      test(zeroCost, heuristicCost, map2);
+      test(heuristicCost, heuristicCost, map2);
+      test(zeroCost, zeroCost, map2);
+    </script>
+  </body>
+</html>
