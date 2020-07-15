@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function log(s) {
+        const p = document.createElement("p");
+        p.innerText = s;
+        document.body.append(p);
+      }
+
+      class Base128 {
+        tailBit = 0; // 尾部补全以便能被 7 整除
+        encode(buffer) {
+          const arr = [];
+          this.tailBit = (7 - ((buffer.byteLength * 8) % 7)) % 7;
+          const len = Math.ceil((buffer.byteLength * 8) / 7);
+          const dataview = new DataView(buffer);
+          for (let i = 0; i < len; i++) {
+            let code = 42;
+            let offsetByte = Math.floor((i * 7) / 8);
+            let offsetBit = (i * 7) % 8;
+            if (offsetByte === buffer.byteLength - 1) {
+              let int8 = dataview.getUint8(offsetByte);
+              code = (int8 << (24 + offsetBit)) >>> (25 + offsetBit);
+            } else {
+              let int16 = dataview.getUint16(offsetByte);
+              code = (int16 << (16 + offsetBit)) >>> (16 + 9);
+            }
+            arr.push(String.fromCharCode(code));
+          }
+          return arr.join("");
+        }
+
+        decode(base128) {
+          const len = (base128.length * 7 - this.tailBit) / 8;
+          const uintArr = new Uint8Array(len);
+          for (let i = 0; i < len; i++) {
+            let code = 42;
+            const offsetStr = Math.floor((i * 8) / 7);
+            const offsetBit = (i * 8) % 7;
+            const f = base128.charCodeAt(offsetStr);
+            const l = base128.charCodeAt(offsetStr + 1) || 0;
+            code =
+              (f << (offsetBit + 25) >>> 24) |
+              (l >> (6 - offsetBit));
+            uintArr[i] = code;
+          }
+          return uintArr.buffer;
+        }
+      }
+
+      (function test() {
+        const uint8Arr = new Uint8Array([
+          0b1001110_1,
+          0b000110_01,
+          0b01010_101,
+          0b1010_1010,
+          0b111_10000,
+          0b00_001111,
+          0b0_0100100,
+        ]);
+        const buffer = uint8Arr.buffer;
+        const bs = new Base128();
+        const base128 = bs.encode(buffer);
+        const str = [
+          String.fromCharCode(0b1001110),
+          String.fromCharCode(0b1000110),
+          String.fromCharCode(0b0101010),
+          String.fromCharCode(0b1011010),
+          String.fromCharCode(0b1010111),
+          String.fromCharCode(0b1000000),
+          String.fromCharCode(0b0011110),
+          String.fromCharCode(0b0100100),
+        ].join("");
+
+        const bf = bs.decode(str);
+        console.assert(
+          new Set([...uint8Arr]).size ===
+            new Set([...uint8Arr, ...new Uint8Array(bf)]).size,
+          `decode: ${uint8Arr} --- ${new Uint8Array(bf)}`
+        );
+      })();
+
+      fetch("./ocnkdwjyiwn41.png")
+        .then((res) => res.arrayBuffer())
+        .then((buffer) => {
+          console.log(new Uint8Array(buffer));
+          log(`binary: ${buffer.byteLength} byte`);
+          const bs = new Base128();
+          const t = performance.now();
+          const base128 = bs.encode(buffer);
+          log(`encode: ${Math.floor(performance.now() - t)} ms`);
+          log(`base128: ${base128.length} byte`);
+          console.log(base128);
+          const tt = performance.now();
+          const buf = bs.decode(base128);
+          console.log(new Uint8Array(buf));
+          log(`decode: ${Math.floor(performance.now() - tt)} ms`);
+          const file = new File([buf], "test.png", { type: "image/png" });
+          const url = URL.createObjectURL(file);
+          const img = new Image(100, 100);
+          img.src = url;
+          document.body.append(img);
+        });
+    </script>
+  </body>
+</html>
