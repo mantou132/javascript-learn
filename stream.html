@@ -1,10 +1,19 @@
-<canvas id="canvas"></canvas>
+<canvas id="canvas" width=300 height=300></canvas>
 <video id="video" muted playsinline></video>
+<button id=btn>pip</button>
 
 <script>
-  const ctx = canvas.getContext("2d");
-  ctx.rect(10, 10, 640, 640);
-  ctx.fill();
+  const ctx = canvas.getContext('2d');
+  const tick = () => {
+    ctx.canvas.width = ctx.canvas.width;
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillStyle = 'black';
+    ctx.font = '50px serif';
+    ctx.fillText(Math.floor(performance.now()), 0, 50);
+    requestAnimationFrame(tick);
+  }
+  tick();
   const stream = canvas.captureStream();
   video.srcObject = stream;
   video
@@ -12,4 +21,5 @@
     .then(() => console.log("video playing"))
     .catch(console.log);
   video.onplaying = () => console.log("video onplaying");
+  btn.onclick = () => video.requestPictureInPicture();
 </script>
