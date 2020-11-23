@@ -1,0 +1,26 @@
+<script>
+  class GemElement extends HTMLElement {
+    constructor() {
+      super();
+      queueMicrotask(() => (this.init = false));
+      this.init = true;
+    }
+  }
+  class Test extends GemElement {
+    constructor(title) {
+      super();
+      this.title = "default";
+      this.title = title;
+    }
+  }
+  customElements.define("app-test", Test);
+
+  Object.defineProperty(Test.prototype, "title", {
+    set(v) {
+      console.log("this.init", this.init);
+      if (this.init && this.hasAttribute("title")) return;
+      this.setAttribute("title", v);
+    },
+  });
+  new Test("123");
+</script>
