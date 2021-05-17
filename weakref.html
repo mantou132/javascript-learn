@@ -1,0 +1,15 @@
+<output></output>
+<script>
+  let data = {};
+  const output = document.querySelector("output");
+
+  const registry = new FinalizationRegistry((counter) => {
+    output.textContent = 'data removed~~'
+  });
+
+  registry.register(data);
+
+  setTimeout(() => {
+    data = null;
+  }, 1000);
+</script>
