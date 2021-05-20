@@ -1,0 +1,48 @@
+<canvas width="1000" height="1000"></canvas>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  const dots = Array.from(Array(1000), () =>
+    [0, 0].map(() => Math.floor(Math.random() * 1000))
+  );
+  let highlightDot = null;
+  const canvas = document.querySelector("canvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.addEventListener("pointermove", ({ x, y }) => {
+    for (let i = dots.length -1; i >= 0; i--) {
+      const dot = dots[i];
+      if (
+        x >= dot[0] &&
+        x <= (dot[0] + 10) &&
+        y >= dot[1] &&
+        y <= (dot[1] + 10)
+      ) {
+        return (highlightDot = dot);
+      }
+    }
+    highlightDot = null;
+  });
+
+  function tick() {
+    canvas.width = 1000;
+
+    dots.forEach((dot) => {
+      ctx.save();
+      if (dot === highlightDot) {
+        ctx.fillStyle = "green";
+      }
+      ctx.fillRect(...dot, 10, 10);
+      ctx.fillText(dot.join(), ...dot);
+      ctx.restore();
+    });
+
+    requestAnimationFrame(tick);
+  }
+  tick();
+</script>
