@@ -1,0 +1,61 @@
+<canvas id="canvas" width="300" height="300"></canvas>
+<video id="video" width="300" height="300" controls muted autoplay></video>
+
+<script>
+  const trackGenerator = new MediaStreamTrackGenerator({ kind: "video" });
+  const writer = trackGenerator.writable.getWriter();
+  const stream = new MediaStream([trackGenerator]);
+  video.srcObject = stream;
+
+  const ctx = canvas.getContext("2d");
+  const tick = () => {
+    ctx.canvas.width = ctx.canvas.width;
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillStyle = "red";
+    ctx.font = "50px serif";
+    ctx.fillText(Math.floor(performance.now()), 0, 50);
+
+    writer.ready.then(() => {
+      // Game simulator generate frame
+      const buffer = ctx.getImageData(0, 0, 300, 300).data.buffer;
+      writer.write(
+        new VideoFrame(buffer, {
+          timestamp: performance.now() * 1000,
+          format: "BGRA",
+          codedWidth: 300,
+          codedHeight: 300,
+        })
+      );
+    });
+
+    requestAnimationFrame(tick);
+  };
+  tick();
+</script>
+
+<!-- 
+<video id="video" width="300" height="300" controls muted autoplay></video>
+<button id="btn">start</button>
+<script>
+  btn.onclick = async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const videoTrack = stream.getVideoTracks()[0];
+
+    const trackProcessor = new MediaStreamTrackProcessor({ track: videoTrack });
+    const trackGenerator = new MediaStreamTrackGenerator({ kind: "video" });
+
+    const transformer = new TransformStream({
+      async transform(videoFrame, controller) {
+        controller.enqueue(videoFrame);
+      },
+    });
+
+    trackProcessor.readable
+      .pipeThrough(transformer)
+      .pipeTo(trackGenerator.writable);
+
+    const streamAfter = new MediaStream([trackGenerator]);
+    video.srcObject = streamAfter;
+  };
+</script> -->
