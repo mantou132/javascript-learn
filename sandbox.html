@@ -1,0 +1,61 @@
+<body></body>
+<script type="module">
+  import ShadowRealm from 'https://jspm.dev/shadowrealm-api'
+
+  const iframe = document.createElement("iframe");
+  iframe.hidden = true;
+  document.body.append(iframe);
+
+  window.fn = new iframe.contentWindow.Function(
+    `
+    const sourceCode = arguments[0];
+    const context = arguments[1];
+
+    const globalObject = { ...context }
+    globalObject.globalThis = globalObject
+    globalObject.Function = function (...args){
+      const sourceCode = args.pop();
+      return new Function(...args, "with(this){" + sourceCode + "}").bind(globalObject)
+    };
+
+    let isInnerCall = false;
+    Object.defineProperty(globalObject, 'eval', {
+        get() {
+            if (isInnerCall) {
+                isInnerCall = false;
+                return eval
+            }
+            return (sourceCode) => {
+              isInnerCall = true
+              // 用户代码里面的 eval 应该被包装
+              // 这里的 eval 应该使用原生 eval
+              return new Function('with(this)return eval(arguments[0])').apply(globalObject, [sourceCode]);
+            };
+        },
+    });
+
+    return globalObject.eval(sourceCode)
+  `
+  );
+
+  const s = new ShadowRealm();
+
+  [fn, s.evaluate.bind(s)].forEach(fn => {
+    console.log('=============')
+    fn("console.log(globalThis.hi)", { hi: () => {} })
+    fn("console.log(this)", {})
+    fn(`console.log(0, eval, eval, 1, eval("this")); console.log(2, eval("this"))`, {});
+    fn(`console.log(eval("globalThis"))`, {})
+    fn(`console.log((0, eval)("this"))`, {})
+    fn(`console.log(eval("eval('this')"))`, {})
+    fn(`console.log(new Function("return this")())`, {})
+    fn(`console.log(new Function("return eval('this')")())`, {})
+    console.log(fn(`function b() {} function a() {}; a`))
+    console.log(fn(`eval("function b() {} function a() {}; a")`))
+  })
+
+  console.log('=============')
+
+  iframe.contentWindow.eval("postMessage(Date.now())")
+  iframe.contentWindow.onmessage= ({data}) => console.log('postMessage delay', Date.now() - data)
+</script>
