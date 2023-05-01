@@ -1,0 +1,11 @@
+<script>
+  let a = {
+    free: () => {
+      //
+    },
+  };
+  window.r = new FinalizationRegistry(alert);
+  // a.free.bind(a) storage ref
+  r.register(a, a.free);
+  a = {};
+</script>
