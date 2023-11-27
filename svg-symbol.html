@@ -1,0 +1,26 @@
+<svg viewBox="0 0 30 10" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <circle id="myCircle" cx="5" cy="5" r="4" />
+  </defs>
+  <use href="#myCircle" x="20" fill="white" stroke="red" />
+</svg>
+<my-element></my-element>
+
+<script>
+  class MyElement extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({
+        mode: "open",
+      });
+      this.shadowRoot.innerHTML = `
+        <svg viewBox="0 0 30 10" xmlns="http://www.w3.org/2000/svg">
+          <use href="#myCircle" x="20" fill="white" stroke="blue" />
+        </svg>
+      `;
+    }
+  }
+  customElements.define("my-element", MyElement);
+</script>
+
+<!-- https://github.com/WICG/webcomponents/issues/772#issuecomment-438834060 -->
